@@ -1,74 +1,71 @@
-import { Component } from 'react';
-import { nanoid } from 'nanoid';
+import { useState } from 'react';
+
 import css from './ContactForm.module.css';
 
-class ContactForm extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
+export default function ContactForm({ onSubmit }) {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
-  nameInputId = nanoid();
-  numberInputId = nanoid();
-
-  handleChange = evt => {
+  const handleChange = evt => {
     const { name, value } = evt.target;
-    // console.log(name, value);
 
-    this.setState({ [name]: value });
+    switch (name) {
+      case 'name':
+        setName(value);
+
+        break;
+
+      case 'number':
+        setNumber(value);
+
+        break;
+
+      default:
+        break;
+    }
   };
-
-  handleSubmit = evt => {
+  const handleSubmit = evt => {
     evt.preventDefault();
-    const { name, number } = this.state;
-    this.props.onSubmit({ name, number });
-    this.reset();
+    onSubmit({ name, number });
+    reset();
   };
 
-  reset = () => {
-    this.setState({
-      name: '',
-      number: '',
-    });
+  const reset = () => {
+    setName('');
+    setNumber('');
   };
 
-  render() {
-    return (
-      <form className={css.form} onSubmit={this.handleSubmit}>
-        <label className={css.form__label} htmlFor={this.nameInputId}>
-          Name
-          <input
-            value={this.state.name}
-            className={css.form__input}
-            onChange={this.handleChange}
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            id={this.nameInputId}
-            placeholder="Olesia Sidolaka"
-          />
-        </label>
-        <label className={css.form__label} htmlFor={this.numberInputId}>
-          Number
-          <input
-            id={this.numberInputId}
-            value={this.state.number}
-            className={css.form__input}
-            onChange={this.handleChange}
-            type="tel"
-            name="number"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-            placeholder="906-02-02"
-          />
-        </label>
-        <button className={css.input__button} type="submit">
-          Add contact
-        </button>
-      </form>
-    );
-  }
+  return (
+    <form className={css.form} onSubmit={handleSubmit}>
+      <label className={css.form__label}>
+        Name
+        <input
+          value={name}
+          className={css.form__input}
+          onChange={handleChange}
+          type="text"
+          name="name"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          placeholder="Olesia Sidolaka"
+        />
+      </label>
+      <label className={css.form__label}>
+        Number
+        <input
+          value={number}
+          className={css.form__input}
+          onChange={handleChange}
+          type="tel"
+          name="number"
+          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          required
+          placeholder="906-02-02"
+        />
+      </label>
+      <button className={css.input__button} type="submit">
+        Add contact
+      </button>
+    </form>
+  );
 }
-
-export default ContactForm;

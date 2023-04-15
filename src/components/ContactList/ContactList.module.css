@@ -7,7 +7,7 @@
   gap: 8px;
   padding: 30px 15px;
   border-radius: 8px;
-  background-color: beige;
+  background-color: rgb(69, 183, 212);
 }
 
 .contact__list {
@@ -27,11 +27,11 @@
   padding: 2px 6px;
   border: none;
   border-radius: 8px;
-  color: darkcyan;
-  background-color: greenyellow;
+  color: rgb(5, 11, 11);
+  background-color: rgb(47, 255, 238);
 }
 
 .contacts__button:hover,
 .contacts__button:focus {
-  background-color: rgb(121, 194, 13);
+  background-color: rgb(13, 173, 194);
 }
